@@ -1,0 +1,6 @@
+interface:
+  display_name: "Agent 指令与上下文体检"
+  short_description: "沿全局和项目提示词的规则引用体检清晰度与上下文，交付只读证据报告"
+  default_prompt: "使用 $context-audit 检查当前工作目录的全局、项目提示词及其规则引用，只报告，不修改。"
+policy:
+  allow_implicit_invocation: false
