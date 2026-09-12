@@ -15,6 +15,7 @@
 依据：[官方配置说明](https://learn.chatgpt.com/docs/config-file/config-basic)。只读取与入口有关的字段，不输出配置全文。
 
 1. 从当前环境取得 CODEX_HOME 的值（只读，不重设）；缺省使用用户主目录的 .codex。探测其中 config.toml，再在已确定的项目根至当前目录链上探测 .codex/config.toml，不递归搜配置。
+   这些配置探测不依赖 AGENTS.md 存在；只有目录／配置存在时也继续。先取得可确认的有效回退文件名，再判默认入口缺失后的候选，不能跳过配置直接宣称未发现项目指令。
 2. 用 TOML 解析器提取 project_doc_fallback_filenames、project_doc_max_bytes，以及与当前项目相关的信任状态。解析失败报告具体位置与限制，不用零散正则猜测完整 TOML 语义。
 3. 若会话明确提供 --profile，按该名称定位 Codex home 下的 <名称>.config.toml；明确的 --config 覆盖优先。文档顺序为会话覆盖、可信项目配置（近目录优先）、选定 profile、用户配置、Unix 的 /etc/codex/config.toml、默认值。只读与当前字段判断有关的层，缺少有效配置／信任证据时不声称最终值已确定。
 4. 回退文件名按同目录的配置名称顺序定位；普通正文相对引用依据其明确约定或引用格式判断，不假定都相对 cwd。没有唯一依据时标路径基准待确认，不全盘找同名目标。
